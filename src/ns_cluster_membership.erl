@@ -269,7 +269,8 @@ enterprise_only_services() ->
 
 services_by_version() ->
     [{?PREHISTORIC, [kv, n1ql, index, fts]},
-     {?VERSION_55,  [cbas, eventing]}].
+     {?VERSION_55,  [cbas, eventing]},
+     {?VERSION_MADHATTER, [cbbs]}].
 
 topology_aware_services_by_version() ->
     [{?PREHISTORIC, [fts, index]},
@@ -385,6 +386,8 @@ user_friendly_service_name(fts) ->
     "full text search";
 user_friendly_service_name(cbas) ->
     "analytics";
+user_friendly_service_name(cbbs) ->
+    "CBBS";
 user_friendly_service_name(Service) ->
     atom_to_list(Service).
 

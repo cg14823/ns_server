@@ -321,7 +321,12 @@ goport_defs() ->
           exe = "eventing-producer",
           service = eventing,
           rpc = eventing,
-          log = ?EVENTING_LOG_FILENAME}].
+          log = ?EVENTING_LOG_FILENAME},
+     #def{id = cbbs,
+          exe = "cbbs",
+          service = cbbs,
+          rpc = cbbs,
+          log = ?CBBS_LOG_FILENAME}].
 
 build_goport_spec(#def{id = SpecId,
                        exe = Executable,
@@ -381,6 +386,14 @@ goport_args(goxdcr, Config, _Cmd, _NodeUUID) ->
     build_port_args([{"-sourceKVAdminPort", rest_port},
                      {"-xdcrRestPort", xdcr_rest_port}], Config) ++
         [IsEnterprise, IsIpv6];
+
+goport_args(cbbs, Config, _Cmd, _NodeUUID) ->
+  %% TODO:// This is for testing it should change
+  build_port_args([{"--master-port", cbbs_master_port},
+                   {"--worker-port", cbbs_worker_port}], Config) ++
+  ["--config-file="++filename:join(path_config:component_path(bin), "config.yaml"),
+   "--cbm="++filename:join(path_config:component_path(bin), "cbbackupmgr"),
+   "--log-level=debug", "--auth-type=ns_server", "--log-file=none"];
 
 goport_args(indexer, Config, _Cmd, NodeUUID) ->
     RestPort = service_ports:get_port(rest_port, Config),

@@ -76,6 +76,7 @@
 -define(JSON_RPC_LOG_FILENAME, "json_rpc.log").
 -define(EVENTING_LOG_FILENAME, "eventing.log").
 -define(CBAS_LOG_FILENAME, "analytics_info.log").
+-define(CBBS_LOG_FILENAME, "cbbs.log").
 
 -define(NS_SERVER_LOGGER, ns_server).
 -define(COUCHDB_LOGGER, couchdb).
@@ -222,6 +223,7 @@
 -define(VERSION_55, [5, 5]).
 -define(VERSION_60, [6, 0]).
 -define(VERSION_MADHATTER, [6, 5]).
+-define(VERSION_CC, [7, 0]).
 
 %% Points to latest release
 -define(LATEST_VERSION_NUM, ?VERSION_MADHATTER).

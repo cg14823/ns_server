@@ -36,6 +36,8 @@ base_indexer_port = 9100
 base_fts_port = 9200
 base_eventing_port = 9300
 base_cbas_port = 9600
+base_cbbs_master_port = 6991
+base_cbbs_worker_port = 6666
 
 LOGLEVELS = ["debug", "info", "warn", "error", "critical"]
 
@@ -179,8 +181,8 @@ def os_specific(args, params):
         # (if it hasn't already been).
         (soft, hard) = resource.getrlimit(resource.RLIMIT_NOFILE)
         if soft < 2048:
-            resource.setrlimit(resource.RLIMIT_NOFILE, (2048, 2048))
-        params['env'] = {"ERL_MAX_PORTS": "2048"}
+            resource.setrlimit(resource.RLIMIT_NOFILE, (4096, 4096))
+        params['env'] = {"ERL_MAX_PORTS": "4096"}
         params['env'].update(os.environ)
 
 
@@ -305,7 +307,9 @@ def erlang_args_for_node(i, ebin_path, extra_args, args_prefix):
         "cbas_replication_port", str(base_cbas_port + i * 15 + 12),
         "cbas_metadata_port", str(base_cbas_port + i * 15 + 13),
         "cbas_metadata_callback_port", str(base_cbas_port + i * 15 + 14),
-        "cbas_ssl_port", str(10000 + base_cbas_port + i)
+        "cbas_ssl_port", str(10000 + base_cbas_port + i),
+        "cbbs_master_port", str(base_cbbs_master_port),
+        "cbbs_worker_port", str(base_cbbs_worker_port)
     ] + extra_args
 
     return args
